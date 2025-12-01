@@ -1,0 +1,79 @@
+# Global training and runtime configuration shared across the project.
+# Model-specific hyperparameters live in:
+#   - config/ml.yaml
+#   - config/dl.yaml
+#   - config/bert.yaml
+
+general:
+  # Global random seed (can be overridden per-module if needed).
+  random_state: 42
+
+  # Preferred device type; actual device resolution will check for CUDA availability.
+  device: "cuda"       # options: "cuda", "cpu"
+
+  # Number of workers for data loading (PyTorch DataLoader).
+  num_workers: 2
+
+  # Whether to enable deterministic behavior where possible.
+  deterministic: true
+
+  # Whether to enable cuDNN benchmarking (may improve speed but change determinism).
+  cudnn_benchmark: false
+
+
+paths:
+  # Base directory for all experiment outputs.
+  experiments_root: "experiments"
+
+  # Subdirectories for logs, saved models, and metrics/plots.
+  logs_dir: "experiments/logs"
+  models_dir: "experiments/models"
+  results_dir: "experiments/results"
+  plots_dir: "experiments/plots"
+
+  # Path to store serialized artifacts such as fitted TF–IDF vectorizer and vocab.
+  artifacts_dir: "data/processed"
+
+
+logging:
+  # Verbosity level for console logging.
+  # options: "DEBUG", "INFO", "WARNING", "ERROR"
+  level: "INFO"
+
+  # Whether to log to file in addition to console.
+  to_file: true
+
+  # Log file name prefix; model-specific code may append suffixes.
+  file_prefix: "training_log"
+
+  # How often to print progress during training loops (in steps/iterations).
+  log_every_n_steps: 50
+
+
+evaluation:
+  # Metrics to compute for all models.
+  # Supported: "accuracy", "precision", "recall", "f1", "confusion_matrix"
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "confusion_matrix"
+
+  # Average type for precision/recall/F1 when aggregating over classes.
+  # options: "binary", "macro", "micro", "weighted"
+  average: "binary"
+
+
+save:
+  # Whether to save trained models by default.
+  save_models: true
+
+  # Whether to overwrite existing models with the same name.
+  overwrite_existing: false
+
+  # Whether to save intermediate checkpoints for DL/BERT models.
+  save_checkpoints: true
+
+  # Maximum number of checkpoints to keep per run (older ones can be pruned).
+  max_checkpoints: 3
