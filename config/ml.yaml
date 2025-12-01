@@ -1,0 +1,79 @@
+# Hyperparameters for classical machine learning models used in
+# "Harnessing BERT for Advanced Email Filtering in Cybersecurity".
+#
+# These values are chosen to be strong, sensible defaults for the
+# SMS Spam Collection dataset and can be tuned further if needed.
+
+general:
+  # Global random seed for all ML models.
+  random_state: 42
+
+  # Whether to use class_weight="balanced" for models that support it.
+  # This helps deal with the class imbalance (ham >> spam).
+  use_class_weight_balanced: true
+
+  # Whether to standardize features for linear models / SVM / KNN.
+  # TF–IDF vectors are usually already well-scaled, but we keep this
+  # option explicit and configurable.
+  use_feature_scaling: true
+
+
+ml_models:
+  random_forest:
+    n_estimators: 200
+    criterion: "gini"        # options: "gini", "entropy", "log_loss"
+    max_depth: null          # null means "no explicit limit"
+    min_samples_split: 2
+    min_samples_leaf: 1
+    max_features: "sqrt"
+    n_jobs: -1
+    # class_weight will be set to "balanced" at runtime if
+    # general.use_class_weight_balanced is true.
+
+  logistic_regression:
+    penalty: "l2"
+    C: 1.0
+    solver: "liblinear"      # good for small/medium datasets and binary tasks
+    max_iter: 1000
+    fit_intercept: true
+    # class_weight will be set to "balanced" at runtime if enabled.
+
+  svm:
+    kernel: "linear"         # linear SVM is common for text classification
+    C: 1.0
+    gamma: "scale"           # ignored for linear kernel, kept for completeness
+    probability: true        # enable probability estimates (slower)
+    # class_weight will be set to "balanced" at runtime if enabled.
+
+  xgboost:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    objective: "binary:logistic"
+    eval_metric: "logloss"
+    reg_lambda: 1.0
+    reg_alpha: 0.0
+    n_jobs: -1
+
+  gradient_boosting:
+    n_estimators: 200
+    learning_rate: 0.1
+    max_depth: 3
+    subsample: 1.0
+    min_samples_split: 2
+    min_samples_leaf: 1
+
+  naive_bayes:
+    # We will use MultinomialNB for TF–IDF features by default.
+    type: "multinomial"      # options: "multinomial", "bernoulli"
+    alpha: 1.0               # smoothing parameter
+    fit_prior: true
+
+  knn:
+    n_neighbors: 5
+    weights: "distance"      # options: "uniform", "distance"
+    metric: "minkowski"
+    p: 2                     # p=2 => Euclidean distance
+    n_jobs: -1
