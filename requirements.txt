@@ -1,27 +1,20 @@
-# Core language + numerics
-numpy>=1.24
-pandas>=2.0
-scipy>=1.10
+# Core numerical / data libraries
+numpy>=1.23.0
+pandas>=1.5.0
 
-# Classical ML and feature extraction
-scikit-learn>=1.3
-xgboost>=1.7
+# Classical ML
+scikit-learn>=1.2.0
+xgboost>=1.7.0
 
-# Deep learning (PyTorch ecosystem)
-torch>=2.0
-torchvision>=0.15
-torchaudio>=2.0
+# Deep learning
+torch>=2.0.0
 
-# Transformers (BERT)
-transformers>=4.40
+# NLP / Transformers
+transformers>=4.40.0
 
 # Utilities
-tqdm>=4.65
 PyYAML>=6.0
+joblib>=1.2.0
 
-# Plotting / visualization
-matplotlib>=3.7
-seaborn>=0.13
-
-# Optional: notebook environment for exploration
-jupyterlab>=4.0
+# Optional but recommended for preprocessing (stopwords, stemming, lemmatization)
+nltk>=3.8.0
