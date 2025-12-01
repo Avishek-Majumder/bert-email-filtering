@@ -1,0 +1,97 @@
+# Hyperparameters for deep learning models used in
+# "Harnessing BERT for Advanced Email Filtering in Cybersecurity".
+#
+# Table II specifies:
+#   - epochs = 10
+#   - batch size = 32
+#   - learning rate = 0.001
+#
+# Here we also define model architecture settings (embedding dimensions,
+# hidden sizes, dropout, etc.) in a central place.
+
+general:
+  random_state: 42
+
+  # Device preference; actual device resolution (CPU/GPU) will be handled
+  # in the training utilities.
+  device: "cuda"         # options: "cuda", "cpu"
+
+  # Common training settings for all DL models (CNN/LSTM/BiLSTM/RNN).
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.001
+
+  # Gradient clipping to stabilize training (set to null to disable).
+  max_grad_norm: 5.0
+
+  # Whether to use a validation split from the training data during DL training
+  # (e.g., for early stopping and monitoring).
+  use_validation_split: true
+  validation_split: 0.1
+
+
+embedding:
+  # Size of the learned word embeddings for sequence-based models.
+  dim: 128
+
+  # Whether to use a padding index for <PAD> tokens.
+  padding_idx: 0
+
+  # Optional: initialize embeddings with a normal distribution.
+  init_std: 0.02
+
+
+cnn:
+  # 1D convolutional text classifier.
+  num_filters: 100
+  filter_sizes: [3, 4, 5]  # typical tri-gram-like filters
+  dropout: 0.5
+  # Fully connected layer hidden dimension (before final output).
+  fc_hidden_dim: 128
+  # Activation function: "relu" or "gelu".
+  activation: "relu"
+
+
+lstm:
+  # Unidirectional LSTM classifier.
+  hidden_size: 128
+  num_layers: 1
+  dropout: 0.5         # applied between LSTM layers if num_layers > 1
+  bidirectional: false
+  # Fully connected layer hidden dimension.
+  fc_hidden_dim: 128
+
+
+bilstm:
+  # Bidirectional LSTM classifier.
+  hidden_size: 128
+  num_layers: 1
+  dropout: 0.5
+  bidirectional: true
+  # Fully connected layer hidden dimension.
+  fc_hidden_dim: 128
+
+
+rnn:
+  # Simple RNN classifier (tanh-based).
+  hidden_size: 128
+  num_layers: 1
+  dropout: 0.5
+  nonlinearity: "tanh"   # options: "tanh", "relu"
+  bidirectional: false
+  # Fully connected layer hidden dimension.
+  fc_hidden_dim: 128
+
+
+optimization:
+  # Choice of optimizer; we will start with Adam as a strong baseline.
+  optimizer: "adam"      # options: "adam", "sgd"
+  weight_decay: 0.0
+
+  # Learning rate scheduler configuration (optional).
+  scheduler:
+    enabled: false
+    # Example: "step_lr", "reduce_on_plateau"
+    type: "step_lr"
+    step_size: 5
+    gamma: 0.5
