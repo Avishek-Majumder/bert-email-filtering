@@ -1,0 +1,76 @@
+# Hyperparameters and configuration for the BERT-based classifier used in
+# "Harnessing BERT for Advanced Email Filtering in Cybersecurity".
+#
+# The paper specifies:
+#   - epochs = 3
+#   - batch size = 16
+#   - learning rate = 2e-5
+#
+# Here we also configure model name, max sequence length, and some
+# common fine-tuning options.
+
+general:
+  random_state: 42
+
+  # Device preference; actual device resolution (CPU/GPU) will be handled
+  # in the training utilities.
+  device: "cuda"          # options: "cuda", "cpu"
+
+  # Directory where BERT fine-tuning outputs will be stored.
+  output_dir: "experiments/bert"
+
+  # Whether to use a validation split from the training data.
+  use_validation_split: true
+  validation_split: 0.1
+
+
+model:
+  # Pretrained model name from Hugging Face model hub.
+  # This is a standard choice for English text classification.
+  pretrained_model_name: "bert-base-uncased"
+
+  # Maximum sequence length (in wordpiece tokens).
+  # SMS messages are short, so 128 is usually sufficient.
+  max_seq_length: 128
+
+  # Dropout probability applied before the final classification head.
+  dropout: 0.3
+
+  # Number of labels for classification (binary: ham vs. spam).
+  num_labels: 2
+
+
+training:
+  # Core training hyperparameters (aligned with the paper).
+  epochs: 3
+  batch_size: 16
+  learning_rate: 2.0e-5
+
+  # Weight decay (L2 regularization) for AdamW.
+  weight_decay: 0.01
+
+  # Warmup ratio for learning rate scheduler (fraction of total steps).
+  warmup_ratio: 0.1
+
+  # Maximum gradient norm for gradient clipping.
+  max_grad_norm: 1.0
+
+  # Whether to use mixed precision (fp16) training if supported by hardware.
+  fp16: false
+
+  # Logging/evaluation frequency (in number of training steps).
+  logging_steps: 50
+  eval_steps: 200
+
+  # Whether to save best model based on validation metric (e.g., F1-score).
+  save_best_model: true
+  metric_for_best_model: "f1"
+  greater_is_better: true
+
+
+inference:
+  # Batch size for evaluation and prediction.
+  eval_batch_size: 32
+
+  # Whether to return prediction probabilities in addition to labels.
+  return_probabilities: true
