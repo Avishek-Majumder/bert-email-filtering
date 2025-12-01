@@ -1,0 +1,76 @@
+# Configuration for dataset loading, splitting, and text preprocessing.
+
+dataset:
+  # Path to the SMS Spam Collection CSV file (relative to project root).
+  path: data/raw/sms_spam_collection.csv
+
+  # Name of the column containing the message text.
+  # Adjust this if your CSV uses a different column name (e.g., "v2").
+  text_column: message
+
+  # Name of the column containing the labels (e.g., "ham" / "spam").
+  # Adjust this if your CSV uses a different column name (e.g., "v1").
+  label_column: label
+
+  # String labels in the CSV that correspond to ham/spam.
+  # These will be mapped to 0 (ham) and 1 (spam).
+  negative_label: ham
+  positive_label: spam
+
+  # Optional: drop duplicate messages and rows with missing text.
+  drop_duplicates: true
+  drop_na_text: true
+
+
+split:
+  # Fraction of the dataset reserved for the test set.
+  test_size: 0.3
+
+  # Use stratified splitting so label proportions are preserved.
+  stratify: true
+
+  # Random seed for train/test splitting.
+  random_state: 42
+
+
+preprocessing:
+  # Apply lowercasing to all text.
+  lowercase: true
+
+  # Remove punctuation characters.
+  remove_punctuation: true
+
+  # Remove numeric characters.
+  remove_numbers: true
+
+  # Remove extra whitespace (multiple spaces, leading/trailing).
+  strip_whitespace: true
+
+  # Tokenization options for non-BERT models.
+  tokenize:
+    # Simple whitespace-based tokenization; we can later extend
+    # this with more advanced tokenizers if needed.
+    method: "whitespace"
+
+  # Stopword removal configuration.
+  stopwords:
+    enabled: true
+    language: "english"
+
+  # Stemming / lemmatization configuration for non-BERT models.
+  stemming:
+    enabled: true
+    algorithm: "porter"  # options we will support: "porter", "snowball"
+
+  lemmatization:
+    enabled: false       # if set to true, we will use lemmatization instead
+    model: "wordnet"     # placeholder; can be extended later
+
+  # Maximum vocabulary size for sequence-based DL models (CNN/LSTM/BiLSTM/RNN).
+  vocab:
+    max_size: 20000
+    min_freq: 2
+
+  # Maximum message length in tokens for sequence-based DL models.
+  sequence:
+    max_length: 100
