@@ -1,0 +1,27 @@
+# Core language + numerics
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+
+# Classical ML and feature extraction
+scikit-learn>=1.3
+xgboost>=1.7
+
+# Deep learning (PyTorch ecosystem)
+torch>=2.0
+torchvision>=0.15
+torchaudio>=2.0
+
+# Transformers (BERT)
+transformers>=4.40
+
+# Utilities
+tqdm>=4.65
+PyYAML>=6.0
+
+# Plotting / visualization
+matplotlib>=3.7
+seaborn>=0.13
+
+# Optional: notebook environment for exploration
+jupyterlab>=4.0
