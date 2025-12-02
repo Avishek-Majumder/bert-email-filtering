@@ -242,6 +242,9 @@ You may also reference this repository as the implementation of the experimental
 
 9. Contact / Issues
 If you encounter issues, have questions about the experiments, or want to adapt the pipeline to a different dataset or setting, feel free to:
+```points
  . Open an issue in the repository, or
  . Fork and customize the configuration files and training scripts as needed.
+```
 We designed the codebase to be modular and config-driven so that extending or reusing the components is straightforward.
+
