@@ -193,12 +193,13 @@ to a different model (e.g., "roberta-base").
   - Set general.device: "cpu" in config/train.yaml to force CPU training.
   - Reduce batch size or max sequence length if you see OOM errors.
 - File not found
- - Check config/data.yaml paths.
- - Ensure directories under experiments/ exist; they are created automatically, but .gitignore may hide them until created.
+  - Check config/data.yaml paths.
+  - Ensure directories under experiments/ exist; they are created automatically, but .gitignore may hide them until created.
 
 - Slow training
- - For quick tests, reduce:
-  - Number of epochs in config/dl.yaml and config/bert.yaml.
-  - Dataset size (temporarily sub-sample your data).
+  - For quick tests, reduce:
+   - Number of epochs in config/dl.yaml and config/bert.yaml.
+   - Dataset size (temporarily sub-sample your data).
 
 If you need more advanced help (e.g., evaluating on custom splits, deploying models, or integrating into a larger system), you can extend the scripts in scripts/ or add new utilities under src/evaluation/ and src/training/.
+
